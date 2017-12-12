@@ -31,7 +31,7 @@ class VisitRemoteDataStore : VisitDataStore {
 
         return Flowable
                 .fromIterable(VISIT_SERVICE_DATA)
-                .delay(SERVICE_LATENCY_IN_MILLIS, TimeUnit.MILLISECONDS)
+//                .delay(SERVICE_LATENCY_IN_MILLIS, TimeUnit.MILLISECONDS)
                 .toList()
                 .toFlowable()
 

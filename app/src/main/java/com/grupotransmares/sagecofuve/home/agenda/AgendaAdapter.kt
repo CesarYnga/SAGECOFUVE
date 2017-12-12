@@ -12,10 +12,12 @@ import kotlinx.android.synthetic.main.list_item_visit.*
 
 class AgendaAdapter : RecyclerView.Adapter<AgendaAdapter.ViewHolder>() {
 
-    private var visits = listOf<Visit>()
+    private var visits: List<Visit>? = null
+
+    var onVisitClickListener: OnVisitClickListener? = null
 
     override fun getItemCount(): Int {
-        return visits.size
+        return visits?.size ?: 0
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
@@ -24,7 +26,7 @@ class AgendaAdapter : RecyclerView.Adapter<AgendaAdapter.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
-        holder?.bind(visits[position])
+        visits?.get(position)?.let { holder?.bind(it) }
     }
 
     fun setVisits(visits: List<Visit>) {
@@ -32,8 +34,14 @@ class AgendaAdapter : RecyclerView.Adapter<AgendaAdapter.ViewHolder>() {
         notifyDataSetChanged()
     }
 
-    class ViewHolder(override val containerView: View?) : RecyclerView.ViewHolder(containerView),
+    inner class ViewHolder(override val containerView: View?) : RecyclerView.ViewHolder(containerView),
             LayoutContainer {
+
+        init {
+            containerView?.setOnClickListener {
+                visits?.get(adapterPosition)?.let { onVisitClickListener?.onVisitClick(it) }
+            }
+        }
 
         fun bind(visit: Visit) {
             txtClient.text = visit.client
@@ -41,5 +49,9 @@ class AgendaAdapter : RecyclerView.Adapter<AgendaAdapter.ViewHolder>() {
             txtDateTime.text = visit.dateTime.toString()
             txtStatus.text = visit.status
         }
+    }
+
+    interface OnVisitClickListener {
+        fun onVisitClick(visit: Visit)
     }
 }

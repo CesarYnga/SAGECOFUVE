@@ -1,7 +1,9 @@
 package com.grupotransmares.sagecofuve.home.agenda
 
+import android.Manifest
+import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -9,8 +11,15 @@ import android.view.ViewGroup
 import com.grupotransmares.sagecofuve.R
 import com.grupotransmares.sagecofuve.common.BaseFragment
 import com.grupotransmares.sagecofuve.home.agenda.domain.model.Visit
+import com.grupotransmares.sagecofuve.tracking.TrackingService
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.listener.PermissionDeniedResponse
+import com.karumi.dexter.listener.PermissionGrantedResponse
+import com.karumi.dexter.listener.single.BasePermissionListener
 import kotlinx.android.synthetic.main.fragment_agenda.*
+import timber.log.Timber
 import javax.inject.Inject
+
 
 class AgendaFragment : BaseFragment(), AgendaContract.View {
 
@@ -25,24 +34,45 @@ class AgendaFragment : BaseFragment(), AgendaContract.View {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         presenter.view = this
 
+        initUI()
+
+//        if (savedInstanceState == null) {
+            presenter.subscribe()
+//        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        presenter.unsubscribe()
+    }
+
+    fun initUI() {
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.setHasFixedSize(true)
         recyclerView.adapter = adapter
 
         swipeRefresh.setColorSchemeResources(R.color.colorAccent)
         swipeRefresh.setOnRefreshListener {
+            Timber.d("onRefresh")
             presenter.loadVisits(true)
         }
-    }
 
-    override fun onStart() {
-        super.onStart()
-        presenter.subscribe()
-    }
+        adapter.onVisitClickListener = object : AgendaAdapter.OnVisitClickListener {
+            override fun onVisitClick(visit: Visit) {
+                Timber.d("onVisitClick: " + visit)
+                when (visit.status) {
+                    Visit.STATUS_PENDING -> {
+                        startTrackingService(visit)
+                    }
 
-    override fun onStop() {
-        super.onStop()
-        presenter.unsubscribe()
+                    Visit.STATUS_IN_PROGRESS -> {
+                        stopTrackingService()
+                    }
+                }
+
+            }
+
+        }
     }
 
     override fun showLoadingIndicator(show: Boolean) {
@@ -51,5 +81,40 @@ class AgendaFragment : BaseFragment(), AgendaContract.View {
 
     override fun showVisits(visits: List<Visit>) {
         adapter.setVisits(visits)
+    }
+
+    fun startTrackingService(visit: Visit) {
+        Timber.d("startTrackingService")
+        Dexter.withActivity(activity)
+                .withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
+                .withListener(object : BasePermissionListener() {
+                    override fun onPermissionGranted(response: PermissionGrantedResponse?) {
+                        Timber.d("onPermissionGranted")
+                        when (visit.status) {
+                            Visit.STATUS_PENDING -> visit.status = Visit.STATUS_IN_PROGRESS
+
+                            Visit.STATUS_IN_PROGRESS -> visit.status = Visit.STATUS_ENDED
+                        }
+
+                        val intent = Intent(context, TrackingService::class.java)
+                        activity.startService(intent)
+                    }
+
+                    override fun onPermissionDenied(response: PermissionDeniedResponse?) {
+                        Timber.d("onPermissionDenied")
+                        AlertDialog.Builder(context)
+                                .setTitle("Location permission")
+                                .setMessage("Location permission is needed for this application.")
+                                .setPositiveButton("OK", null)
+                                .show()
+                    }
+                })
+                .check()
+    }
+
+    fun stopTrackingService() {
+        Timber.d("stopTrackingService")
+        val intent = Intent(context, TrackingService::class.java)
+        activity.stopService(intent)
     }
 }

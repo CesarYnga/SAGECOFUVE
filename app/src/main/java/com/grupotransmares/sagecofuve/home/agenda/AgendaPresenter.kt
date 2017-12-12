@@ -16,24 +16,27 @@ class AgendaPresenter @Inject constructor(private val getVisits: GetVisits) : Ag
 
     override fun unsubscribe() {
         getVisits.dispose()
+        view = null
     }
 
     override fun loadVisits(forceUpdate: Boolean) {
         view?.showLoadingIndicator(true)
         getVisits.forceUpdate = forceUpdate
-        getVisits.execute(object : DisposableSubscriber<List<Visit>>() {
-            override fun onNext(visits: List<Visit>) {
-                view?.showVisits(visits)
-            }
+        getVisits.execute(VisitsSubscriber())
+    }
 
-            override fun onError(e: Throwable) {
-                Timber.e(e, "Error loading visits")
-                view?.showLoadingIndicator(false)
-            }
+    inner class VisitsSubscriber : DisposableSubscriber<List<Visit>>() {
+        override fun onNext(visits: List<Visit>) {
+            view?.showVisits(visits)
+        }
 
-            override fun onComplete() {
-                view?.showLoadingIndicator(false)
-            }
-        })
+        override fun onError(e: Throwable) {
+            Timber.e(e, "Error loading visits")
+            view?.showLoadingIndicator(false)
+        }
+
+        override fun onComplete() {
+            view?.showLoadingIndicator(false)
+        }
     }
 }

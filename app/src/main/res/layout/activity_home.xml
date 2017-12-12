@@ -8,13 +8,15 @@
     tools:context="com.grupotransmares.sagecofuve.home.HomeActivity">
 
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"/>
+            android:layout_height="?actionBarSize"
+            android:theme="@style/ActionBarThemeOverlay"/>
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tabLayout"
@@ -27,7 +29,8 @@
     <FrameLayout
         android:id="@+id/content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_below="@id/appBar"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fabAddVisit"

@@ -32,9 +32,11 @@ kapt {
 ext {
     androidSupportVersion = '26.1.0'
     androidConstraintLayoutVersion = '1.0.2'
+    playServicesVersion = '11.6.2'
     daggerVersion = '2.13'
     rxJavaVersion = '2.1.7'
     rxAndroidVersion = '2.0.1'
+    dexterVersion = '4.2.0'
     timberVersion = '4.6.0'
     junitVersion = '4.12'
 }
@@ -46,6 +48,8 @@ dependencies {
     implementation "com.android.support:design:$androidSupportVersion"
     implementation "com.android.support.constraint:constraint-layout:$androidConstraintLayoutVersion"
 
+    implementation "com.google.android.gms:play-services-location:$playServicesVersion"
+
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
     implementation "com.google.dagger:dagger:$daggerVersion"
 
@@ -54,6 +58,8 @@ dependencies {
 
     implementation "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion"
     implementation "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
+
+    implementation "com.karumi:dexter:$dexterVersion"
 
     implementation "com.jakewharton.timber:timber:$timberVersion"
 

@@ -2,7 +2,7 @@ package com.grupotransmares.sagecofuve.home.agenda.domain.model
 
 import android.support.annotation.StringDef
 
-data class Visit(val client: String, val address: String, val dateTime: Long, @Status val status: String) {
+data class Visit(var client: String, var address: String, var dateTime: Long, @Status var status: String) {
 
     companion object {
         const val STATUS_PENDING = "VISITA PENDIENTE"

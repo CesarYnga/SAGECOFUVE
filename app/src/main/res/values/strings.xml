@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">SAGECOFUVE</string>
+    <string name="app_name">PoC</string>
+    <string name="tab_agenda">Agenda</string>
 </resources>
