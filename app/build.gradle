@@ -43,17 +43,20 @@ ext {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     implementation "com.android.support:appcompat-v7:$androidSupportVersion"
+    implementation "com.android.support:preference-v7:$androidSupportVersion"
     implementation "com.android.support:design:$androidSupportVersion"
     implementation "com.android.support.constraint:constraint-layout:$androidConstraintLayoutVersion"
 
     implementation "com.google.android.gms:play-services-location:$playServicesVersion"
 
+    implementation 'com.android.support:support-v4:26.1.0'
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
     implementation "com.google.dagger:dagger:$daggerVersion"
 
-    implementation "com.google.dagger:dagger-android-support:$daggerVersion" // if you use the support libraries
+    implementation "com.google.dagger:dagger-android-support:$daggerVersion"
+    // if you use the support libraries
     kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
 
     implementation "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion"
@@ -66,4 +69,7 @@ dependencies {
     testImplementation "junit:junit:$junitVersion"
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+
+    debugCompile 'com.amitshekhar.android:debug-db:1.0.1'
+
 }

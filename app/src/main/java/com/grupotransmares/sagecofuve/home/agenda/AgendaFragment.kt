@@ -41,8 +41,8 @@ class AgendaFragment : BaseFragment(), AgendaContract.View {
 //        }
     }
 
-    override fun onStop() {
-        super.onStop()
+    override fun onDestroy() {
+        super.onDestroy()
         presenter.unsubscribe()
     }
 

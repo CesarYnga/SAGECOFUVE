@@ -1,4 +1,13 @@
 <resources>
     <string name="app_name">PoC</string>
     <string name="tab_agenda">Agenda</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Strings related to Settings -->
+    <string name="pref_category_location">Location</string>
+
+    <string name="pref_title_location_interval">Interval</string>
+    <string name="pref_title_location_fastest_interval">Fastest interval</string>
+    <string name="pref_title_location_smallest_displacement">Smallest displacement</string>
+
 </resources>

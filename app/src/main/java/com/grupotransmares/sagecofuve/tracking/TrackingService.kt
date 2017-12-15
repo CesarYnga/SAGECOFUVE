@@ -6,6 +6,10 @@ import android.content.Intent
 import android.os.IBinder
 import com.google.android.gms.location.*
 import timber.log.Timber
+import com.grupotransmares.sagecofuve.settings.SettingsActivity
+import android.content.SharedPreferences
+import android.support.v7.preference.PreferenceManager
+
 
 class TrackingService : Service() {
 
@@ -19,9 +23,18 @@ class TrackingService : Service() {
 
         Timber.d("onCreate")
 
-        locationRequest.interval = 1000
-        locationRequest.fastestInterval = 5000
-        locationRequest.smallestDisplacement = 1f
+        val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
+        val intervalPref = sharedPref.getInt("location_interval", 0)
+        val fastestIntervalPref = sharedPref.getInt("location_fastest_interval", 0)
+        val smallestDisplacementPref = sharedPref.getInt("location_smallest_displacement", 0)
+
+        Timber.v("Location request initialize with interval %d, fastest interval %d, smallest displacement %d",
+                intervalPref, fastestIntervalPref, smallestDisplacementPref)
+
+
+        locationRequest.interval = intervalPref * 1000L
+        locationRequest.fastestInterval = fastestIntervalPref * 1000L
+        locationRequest.smallestDisplacement = smallestDisplacementPref.toFloat()
         locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
