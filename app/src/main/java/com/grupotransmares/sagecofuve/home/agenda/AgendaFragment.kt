@@ -36,9 +36,9 @@ class AgendaFragment : BaseFragment(), AgendaContract.View {
 
         initUI()
 
-//        if (savedInstanceState == null) {
+        if (savedInstanceState == null) {
             presenter.subscribe()
-//        }
+        }
     }
 
     override fun onDestroy() {
@@ -66,7 +66,11 @@ class AgendaFragment : BaseFragment(), AgendaContract.View {
                     }
 
                     Visit.STATUS_IN_PROGRESS -> {
-                        stopTrackingService()
+                        stopTrackingService(visit)
+                    }
+
+                    Visit.STATUS_ENDED -> {
+                        presenter.updateStatus(visit)
                     }
                 }
 
@@ -90,11 +94,7 @@ class AgendaFragment : BaseFragment(), AgendaContract.View {
                 .withListener(object : BasePermissionListener() {
                     override fun onPermissionGranted(response: PermissionGrantedResponse?) {
                         Timber.d("onPermissionGranted")
-                        when (visit.status) {
-                            Visit.STATUS_PENDING -> visit.status = Visit.STATUS_IN_PROGRESS
-
-                            Visit.STATUS_IN_PROGRESS -> visit.status = Visit.STATUS_ENDED
-                        }
+                        presenter.updateStatus(visit)
 
                         val intent = Intent(context, TrackingService::class.java)
                         activity.startService(intent)
@@ -112,8 +112,9 @@ class AgendaFragment : BaseFragment(), AgendaContract.View {
                 .check()
     }
 
-    fun stopTrackingService() {
+    fun stopTrackingService(visit: Visit) {
         Timber.d("stopTrackingService")
+        presenter.updateStatus(visit)
         val intent = Intent(context, TrackingService::class.java)
         activity.stopService(intent)
     }

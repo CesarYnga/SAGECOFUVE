@@ -1,6 +1,7 @@
 package com.grupotransmares.sagecofuve.home.agenda
 
 import com.grupotransmares.sagecofuve.di.ActivityScope
+import com.grupotransmares.sagecofuve.home.agenda.domain.model.Visit
 import com.grupotransmares.sagecofuve.home.agenda.domain.usecase.GetVisits
 import timber.log.Timber
 import javax.inject.Inject
@@ -15,6 +16,16 @@ class AgendaPresenter @Inject constructor(private val getVisits: GetVisits) : Ag
     override fun unsubscribe() {
         getVisits.dispose()
         view = null
+    }
+
+    fun updateStatus(visit: Visit) {
+        when (visit.status) {
+            Visit.STATUS_PENDING -> visit.status = Visit.STATUS_IN_PROGRESS
+
+            Visit.STATUS_IN_PROGRESS -> visit.status = Visit.STATUS_ENDED
+
+            Visit.STATUS_ENDED -> visit.status = Visit.STATUS_PENDING
+        }
     }
 
     override fun loadVisits(forceUpdate: Boolean) {

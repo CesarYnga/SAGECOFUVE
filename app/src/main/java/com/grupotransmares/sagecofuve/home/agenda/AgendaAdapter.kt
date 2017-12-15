@@ -39,7 +39,10 @@ class AgendaAdapter : RecyclerView.Adapter<AgendaAdapter.ViewHolder>() {
 
         init {
             containerView?.setOnClickListener {
-                visits?.get(adapterPosition)?.let { onVisitClickListener?.onVisitClick(it) }
+                visits?.get(adapterPosition)?.let {
+                    onVisitClickListener?.onVisitClick(it)
+                    notifyItemChanged(adapterPosition)
+                }
             }
         }
 
