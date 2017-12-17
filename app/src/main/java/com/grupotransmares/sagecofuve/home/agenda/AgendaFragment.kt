@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -47,6 +48,8 @@ class AgendaFragment : BaseFragment(), AgendaContract.View {
     }
 
     fun initUI() {
+        val dividerDecoration = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
+        recyclerView.addItemDecoration(dividerDecoration)
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.setHasFixedSize(true)
         recyclerView.adapter = adapter
@@ -59,7 +62,7 @@ class AgendaFragment : BaseFragment(), AgendaContract.View {
 
         adapter.onVisitClickListener = object : AgendaAdapter.OnVisitClickListener {
             override fun onVisitClick(visit: Visit) {
-                Timber.d("onVisitClick: " + visit)
+                Timber.d("onVisitClick: %s", visit)
                 when (visit.status) {
                     Visit.STATUS_PENDING -> {
                         startTrackingService(visit)
