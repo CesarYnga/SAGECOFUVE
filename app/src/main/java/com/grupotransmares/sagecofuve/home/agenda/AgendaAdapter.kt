@@ -49,7 +49,7 @@ class AgendaAdapter : RecyclerView.Adapter<AgendaAdapter.ViewHolder>() {
         fun bind(visit: Visit) {
             txtClient.text = visit.client
             txtAddress.text = visit.address
-            txtDateTime.text = visit.dateTime.toString()
+            txtDateTime.text = visit.dateTime
             txtStatus.text = visit.status
         }
     }

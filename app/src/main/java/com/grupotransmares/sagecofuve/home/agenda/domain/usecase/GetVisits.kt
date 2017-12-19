@@ -9,7 +9,7 @@ import javax.inject.Inject
 class GetVisits @Inject constructor(private val visitRepository: VisitRepository) : UseCase<Unit, List<Visit>>() {
 
     override fun buildUseCaseObservable(requestValues: Unit?): Flowable<List<Visit>> {
-        return visitRepository.getVisits()
+        return visitRepository.getVisits().toFlowable()
     }
 
 }

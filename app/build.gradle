@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'io.fabric'
 
 android {
     compileSdkVersion 26
@@ -10,8 +11,11 @@ android {
         minSdkVersion 21
         targetSdkVersion 26
         versionCode 1
-        versionName "1.0"
+        versionName "0.0.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        ext.betaDistributionEmails="jesquerraferruzo@gmail.com, m.garcia.graz@gmail.com, daniel.carbajal@pucp.edu.pe"
+        ext.betaDistributionReleaseNotes="Initial debug release"
     }
     buildTypes {
         release {
@@ -38,6 +42,8 @@ ext {
     rxAndroidVersion = '2.0.1'
     dexterVersion = '4.2.0'
     timberVersion = '4.6.0'
+    retrofitVersion = '2.3.0'
+    okhttpVersion = '3.9.1'
     junitVersion = '4.12'
 }
 
@@ -62,6 +68,11 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion"
     implementation "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
 
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
+
     implementation "com.karumi:dexter:$dexterVersion"
 
     implementation "com.jakewharton.timber:timber:$timberVersion"
@@ -71,5 +82,8 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 
     debugCompile 'com.amitshekhar.android:debug-db:1.0.1'
+    implementation('com.crashlytics.sdk.android:crashlytics:2.8.0@aar') {
+        transitive = true;
+    }
 
 }

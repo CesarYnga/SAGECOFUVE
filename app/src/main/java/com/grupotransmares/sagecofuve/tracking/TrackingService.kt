@@ -4,19 +4,31 @@ import android.annotation.SuppressLint
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
-import com.google.android.gms.location.*
-import timber.log.Timber
-import com.grupotransmares.sagecofuve.settings.SettingsActivity
-import android.content.SharedPreferences
 import android.support.v7.preference.PreferenceManager
+import com.google.android.gms.location.*
+import com.grupotransmares.sagecofuve.tracking.domain.usecase.RegisterVisitLocation
+import com.grupotransmares.sagecofuve.tracking.domain.usecase.UpdateVisitLocation
+import dagger.android.DaggerService
+import timber.log.Timber
+import javax.inject.Inject
 
 
-class TrackingService : Service() {
+class TrackingService : DaggerService() {
 
     val locationRequest = LocationRequest()
-    lateinit  var fusedLocationClient: FusedLocationProviderClient
+    lateinit var fusedLocationClient: FusedLocationProviderClient
     var requestingLocationUpdates = false
     lateinit var locationCallback: LocationCallback
+
+    @Inject
+    lateinit var registerVisitLocation: RegisterVisitLocation
+    @Inject
+    lateinit var updateVisitLocation: UpdateVisitLocation
+
+    val visitId: Long = 0
+    var trackKey: String = ""
+
+    var locationRegistered = false
 
     override fun onCreate() {
         super.onCreate()
@@ -43,6 +55,24 @@ class TrackingService : Service() {
                 val locations = locationResult?.locations
                 val location = locations?.get(locations.size - 1)
                 Timber.v("Last location: long=" + location?.longitude + " lat=" + location?.latitude)
+                if (locationRegistered) {
+                    updateVisitLocation.execute(
+                            {},
+                            { e -> Timber.e(e, "Error updating visit location") },
+                            { Timber.d("Update visit location success") },
+                            UpdateVisitLocation.Params(trackKey, location?.latitude!!, location.longitude)
+                    )
+                } else {
+                    registerVisitLocation.execute(
+                            { trackKeyResponse -> trackKey = trackKeyResponse.value },
+                            { e -> Timber.e(e, "Error registering visit location") },
+                            {
+                                Timber.d("Register visit location success")
+                                locationRegistered = true
+                            },
+                            RegisterVisitLocation.Params(visitId, location?.latitude!!, location.longitude)
+                    )
+                }
             }
         }
     }

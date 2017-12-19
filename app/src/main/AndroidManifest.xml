@@ -28,9 +28,9 @@
 
         <service android:name=".tracking.TrackingService" />
 
-        <activity
-            android:name=".asd.SettingsActivity"
-            android:label="@string/title_activity_settings"></activity>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="b6464d9cc67aabd8740cab51481b5ad55b908788" />
     </application>
 
 </manifest>

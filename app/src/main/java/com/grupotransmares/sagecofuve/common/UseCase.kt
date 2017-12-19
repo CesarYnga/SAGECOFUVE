@@ -11,7 +11,7 @@ abstract class UseCase<in P, T> {
 
     var forceUpdate = false
 
-    abstract fun buildUseCaseObservable(requestValues: P?): Flowable<T>
+    abstract fun buildUseCaseObservable(requestValues: P? = null): Flowable<T>
 
     fun execute(onNext: (T) -> Unit, onError: (Throwable) -> Unit, onComplete: () -> Unit, requestValues: P? = null) {
         val flowable = buildUseCaseObservable(requestValues)

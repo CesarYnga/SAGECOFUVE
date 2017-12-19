@@ -7,7 +7,9 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @ActivityScope
-class AgendaPresenter @Inject constructor(private val getVisits: GetVisits) : AgendaContract.Presenter() {
+class AgendaPresenter
+    @Inject
+    constructor(private val getVisits: GetVisits) : AgendaContract.Presenter() {
 
     override fun subscribe() {
         loadVisits(false)

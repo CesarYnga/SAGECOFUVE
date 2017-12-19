@@ -17,6 +17,7 @@ import com.karumi.dexter.Dexter
 import com.karumi.dexter.listener.PermissionDeniedResponse
 import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.single.BasePermissionListener
+import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.fragment_agenda.*
 import timber.log.Timber
 import javax.inject.Inject
@@ -40,6 +41,11 @@ class AgendaFragment : BaseFragment(), AgendaContract.View {
         if (savedInstanceState == null) {
             presenter.subscribe()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        clearFindViewByIdCache()
     }
 
     override fun onDestroy() {
@@ -100,6 +106,7 @@ class AgendaFragment : BaseFragment(), AgendaContract.View {
                         presenter.updateStatus(visit)
 
                         val intent = Intent(context, TrackingService::class.java)
+                        intent.putExtra("visitId", visit.id)
                         activity.startService(intent)
                     }
 

@@ -6,19 +6,19 @@
         android:title="@string/pref_category_location">
 
         <com.grupotransmares.sagecofuve.settings.NumberPickerPreferenceJava
-            android:defaultValue="3"
+            android:defaultValue="5"
             android:key="location_interval"
             android:title="@string/pref_title_location_interval"
-            android:summary="3 secs"
+            android:summary="5 secs"
             app:label="secs"
             app:max="10"
             app:min="1"/>
 
         <com.grupotransmares.sagecofuve.settings.NumberPickerPreferenceJava
-            android:defaultValue="5"
+            android:defaultValue="3"
             android:key="location_fastest_interval"
             android:title="@string/pref_title_location_fastest_interval"
-            android:summary="5 secs"
+            android:summary="3 secs"
             app:label="secs"
             app:max="10"
             app:min="5"/>

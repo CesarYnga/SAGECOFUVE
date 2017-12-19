@@ -14,6 +14,7 @@ import dagger.BindsInstance
 @Component(modules = arrayOf(
         ApplicationModule::class,
         ActivityBindingModule::class,
+        ServiceBindingModule::class,
         AndroidSupportInjectionModule::class
 ))
 interface ApplicationComponent : AndroidInjector<MyApplication> {
