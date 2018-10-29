@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
-import android.support.v7.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 import com.google.android.gms.location.*
 import com.grupotransmares.sagecofuve.tracking.domain.usecase.RegisterVisitLocation
 import com.grupotransmares.sagecofuve.tracking.domain.usecase.UpdateVisitLocation

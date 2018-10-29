@@ -8,6 +8,6 @@ import dagger.android.ContributesAndroidInjector
 abstract class ActivityBindingModule {
 
     @ActivityScope
-    @ContributesAndroidInjector(modules = arrayOf(VisitModule::class))
+    @ContributesAndroidInjector(modules = [AgendaModule::class, ChatbotModule::class])
     internal abstract fun homeActivity(): HomeActivity
 }

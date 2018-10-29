@@ -1,9 +1,9 @@
-package com.grupotransmares.sagecofuve.data.repository
+package com.grupotransmares.sagecofuve.data.repository.visit
 
 import android.content.Context
 import com.grupotransmares.sagecofuve.data.network.ApiService
-import com.grupotransmares.sagecofuve.data.repository.source.VisitDataStore
-import com.grupotransmares.sagecofuve.data.repository.source.VisitRemoteDataStore
+import com.grupotransmares.sagecofuve.data.repository.visit.source.VisitDataSource
+import com.grupotransmares.sagecofuve.data.repository.visit.source.VisitRemoteDataSource
 import com.grupotransmares.sagecofuve.home.agenda.domain.model.Visit
 import com.grupotransmares.sagecofuve.tracking.domain.TrackKey
 import io.reactivex.Single
@@ -12,13 +12,12 @@ import javax.inject.Singleton
 
 @Singleton
 class VisitRepository
-    @Inject
-    constructor(context: Context, apiService: ApiService) : VisitDataStore {
+@Inject constructor(context: Context, apiService: ApiService) : VisitDataSource {
 
-    private val visitRemoteDataSource: VisitDataStore
+    private val visitRemoteDataSource: VisitDataSource
 
     init {
-        visitRemoteDataSource = VisitRemoteDataStore(context, apiService)
+        visitRemoteDataSource = VisitRemoteDataSource(context, apiService)
     }
 
     override fun getVisits(): Single<List<Visit>> {

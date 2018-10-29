@@ -1,4 +1,4 @@
-package com.grupotransmares.sagecofuve.data.repository.source
+package com.grupotransmares.sagecofuve.data.repository.visit.source
 
 import android.accounts.NetworkErrorException
 import android.content.Context
@@ -10,7 +10,7 @@ import io.reactivex.Flowable
 import io.reactivex.Single
 import java.util.concurrent.TimeUnit
 
-class VisitRemoteDataStore(private val context: Context, private val apiService: ApiService) : VisitDataStore {
+class VisitRemoteDataSource(private val context: Context, private val apiService: ApiService) : VisitDataSource {
 
     companion object {
         lateinit var VISIT_SERVICE_DATA: MutableList<Visit>

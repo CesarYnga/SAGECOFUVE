@@ -1,12 +1,11 @@
 package com.grupotransmares.sagecofuve.home.agenda
 
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import com.grupotransmares.sagecofuve.R
 import com.grupotransmares.sagecofuve.home.agenda.domain.model.Visit
-
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.list_item_visit.*
 
@@ -20,25 +19,25 @@ class AgendaAdapter : RecyclerView.Adapter<AgendaAdapter.ViewHolder>() {
         return visits?.size ?: 0
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent?.context).inflate(R.layout.list_item_visit, parent, false)
-        return ViewHolder(view)
-    }
-
-    override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
-        visits?.get(position)?.let { holder?.bind(it) }
-    }
-
     fun setVisits(visits: List<Visit>) {
         this.visits = visits
         notifyDataSetChanged()
     }
 
-    inner class ViewHolder(override val containerView: View?) : RecyclerView.ViewHolder(containerView),
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item_visit, parent, false)
+        return ViewHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        visits?.get(position)?.let { holder.bind(it) }
+    }
+
+    inner class ViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView),
             LayoutContainer {
 
         init {
-            containerView?.setOnClickListener {
+            containerView.setOnClickListener {
                 visits?.get(adapterPosition)?.let {
                     onVisitClickListener?.onVisitClick(it)
                     notifyItemChanged(adapterPosition)

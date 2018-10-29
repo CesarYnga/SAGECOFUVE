@@ -5,14 +5,14 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'io.fabric'
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 28
     defaultConfig {
         applicationId "com.grupotransmares.sagecofuve"
         minSdkVersion 21
-        targetSdkVersion 26
+        targetSdkVersion 28
         versionCode 1
         versionName "0.0.1"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         ext.betaDistributionEmails="jesquerraferruzo@gmail.com, m.garcia.graz@gmail.com, daniel.carbajal@pucp.edu.pe"
         ext.betaDistributionReleaseNotes="Initial debug release"
@@ -34,30 +34,28 @@ kapt {
 }
 
 ext {
-    androidSupportVersion = '26.1.0'
-    androidConstraintLayoutVersion = '1.0.2'
-    playServicesVersion = '11.6.2'
-    daggerVersion = '2.13'
-    rxJavaVersion = '2.1.7'
-    rxAndroidVersion = '2.0.1'
-    dexterVersion = '4.2.0'
-    timberVersion = '4.6.0'
-    retrofitVersion = '2.3.0'
-    okhttpVersion = '3.9.1'
+    androidMaterialComponentVersion = '1.0.0'
+    androidConstraintLayoutVersion = '1.1.3'
+    androidPreferenceVersion = '1.0.0'
+    playServicesVersion = '16.0.0'
+    daggerVersion = '2.16'
+    rxJavaVersion = '2.2.3'
+    rxAndroidVersion = '2.1.0'
+    dexterVersion = '5.0.0'
+    timberVersion = '4.7.1'
+    retrofitVersion = '2.4.0'
+    okhttpVersion = '3.11.0'
     junitVersion = '4.12'
+    dialogFlowVersion = '2.0.7@aar'
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation "com.android.support:appcompat-v7:$androidSupportVersion"
-    implementation "com.android.support:preference-v7:$androidSupportVersion"
-    implementation "com.android.support:design:$androidSupportVersion"
-    implementation "com.android.support.constraint:constraint-layout:$androidConstraintLayoutVersion"
-
+    implementation "com.google.android.material:material:$androidMaterialComponentVersion"
+    implementation "androidx.constraintlayout:constraintlayout:$androidConstraintLayoutVersion"
+    implementation "androidx.preference:preference:$androidPreferenceVersion"
     implementation "com.google.android.gms:play-services-location:$playServicesVersion"
-
-    implementation 'com.android.support:support-v4:26.1.0'
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
     implementation "com.google.dagger:dagger:$daggerVersion"
 
@@ -77,12 +75,14 @@ dependencies {
 
     implementation "com.jakewharton.timber:timber:$timberVersion"
 
+    implementation "ai.api:sdk:$dialogFlowVersion"
+    implementation 'ai.api:libai:1.6.12'
+
     testImplementation "junit:junit:$junitVersion"
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    androidTestImplementation 'androidx.test:runner:1.1.0-beta02'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-beta02'
 
     implementation('com.crashlytics.sdk.android:crashlytics:2.9.5@aar') {
-        transitive = true;
+        transitive = true
     }
-
 }

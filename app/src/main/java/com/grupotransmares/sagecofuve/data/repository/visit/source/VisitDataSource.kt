@@ -1,10 +1,10 @@
-package com.grupotransmares.sagecofuve.data.repository.source
+package com.grupotransmares.sagecofuve.data.repository.visit.source
 
 import com.grupotransmares.sagecofuve.home.agenda.domain.model.Visit
 import com.grupotransmares.sagecofuve.tracking.domain.TrackKey
 import io.reactivex.Single
 
-interface VisitDataStore {
+interface VisitDataSource {
 
     fun getVisits(): Single<List<Visit>>
 

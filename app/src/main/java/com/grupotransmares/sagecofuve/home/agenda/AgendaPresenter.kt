@@ -8,8 +8,8 @@ import javax.inject.Inject
 
 @ActivityScope
 class AgendaPresenter
-    @Inject
-    constructor(private val getVisits: GetVisits) : AgendaContract.Presenter() {
+@Inject
+constructor(private val getVisits: GetVisits) : AgendaContract.Presenter() {
 
     override fun subscribe() {
         loadVisits(false)

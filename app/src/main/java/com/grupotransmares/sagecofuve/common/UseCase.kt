@@ -13,7 +13,7 @@ abstract class UseCase<in P, T> {
 
     abstract fun buildUseCaseObservable(requestValues: P? = null): Flowable<T>
 
-    fun execute(onNext: (T) -> Unit, onError: (Throwable) -> Unit, onComplete: () -> Unit, requestValues: P? = null) {
+    fun execute(onNext: (T) -> Unit, onError: (Throwable) -> Unit, onComplete: (() -> Unit)? = null, requestValues: P? = null) {
         val flowable = buildUseCaseObservable(requestValues)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread(), true)

@@ -5,8 +5,8 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
 @Module
-abstract class VisitModule {
+abstract class AgendaModule {
 
     @ContributesAndroidInjector
-    internal abstract fun tasksFragment(): AgendaFragment
+    internal abstract fun agendaFragment(): AgendaFragment
 }

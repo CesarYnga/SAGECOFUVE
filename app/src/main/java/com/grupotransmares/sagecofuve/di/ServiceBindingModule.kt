@@ -7,6 +7,6 @@ import dagger.android.ContributesAndroidInjector
 @Module
 abstract class ServiceBindingModule {
 
-    @ContributesAndroidInjector(modules = arrayOf(VisitModule::class))
+    @ContributesAndroidInjector(modules = arrayOf(AgendaModule::class))
     internal abstract fun trackingService(): TrackingService
 }

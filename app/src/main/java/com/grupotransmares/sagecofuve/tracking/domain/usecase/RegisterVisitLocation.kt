@@ -1,7 +1,7 @@
 package com.grupotransmares.sagecofuve.tracking.domain.usecase
 
 import com.grupotransmares.sagecofuve.common.UseCase
-import com.grupotransmares.sagecofuve.data.repository.VisitRepository
+import com.grupotransmares.sagecofuve.data.repository.visit.VisitRepository
 import com.grupotransmares.sagecofuve.tracking.domain.TrackKey
 import io.reactivex.Flowable
 import javax.inject.Inject

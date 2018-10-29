@@ -4,11 +4,11 @@ import android.Manifest
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.grupotransmares.sagecofuve.R
 import com.grupotransmares.sagecofuve.common.BaseFragment
 import com.grupotransmares.sagecofuve.home.agenda.domain.model.Visit
@@ -29,11 +29,11 @@ class AgendaFragment : BaseFragment(), AgendaContract.View {
 
     @Inject lateinit var presenter: AgendaPresenter
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater?.inflate(R.layout.fragment_agenda, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_agenda, container, false)
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         presenter.view = this
 
         initUI()
@@ -41,11 +41,6 @@ class AgendaFragment : BaseFragment(), AgendaContract.View {
         if (savedInstanceState == null) {
             presenter.subscribe()
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        clearFindViewByIdCache()
     }
 
     override fun onDestroy() {
@@ -107,7 +102,7 @@ class AgendaFragment : BaseFragment(), AgendaContract.View {
 
                         val intent = Intent(context, TrackingService::class.java)
                         intent.putExtra("visitId", visit.id)
-                        activity.startService(intent)
+                        activity?.startService(intent)
                     }
 
                     override fun onPermissionDenied(response: PermissionDeniedResponse?) {
@@ -126,6 +121,6 @@ class AgendaFragment : BaseFragment(), AgendaContract.View {
         Timber.d("stopTrackingService")
         presenter.updateStatus(visit)
         val intent = Intent(context, TrackingService::class.java)
-        activity.stopService(intent)
+        activity?.stopService(intent)
     }
 }

@@ -1,6 +1,6 @@
 package com.grupotransmares.sagecofuve.home.agenda.domain.model
 
-import android.support.annotation.StringDef
+import androidx.annotation.StringDef
 
 data class Visit(var id: Long, var client: String, var address: String, var dateTime: String, @Status var status: String) {
 
