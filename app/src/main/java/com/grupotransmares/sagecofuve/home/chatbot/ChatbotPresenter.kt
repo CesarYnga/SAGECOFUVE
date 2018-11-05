@@ -22,8 +22,8 @@ class ChatbotPresenter
     }
 
     override fun getWelcomeMessage() {
-        getWelcomeMessage.execute(onNext = {chatbotResponse ->
-            view?.showChatbotResponse(chatbotResponse)
+        getWelcomeMessage.execute(onNext = {chatbotMessage ->
+            view?.showChatbotMessage(chatbotMessage)
         }, onError = {e ->
             Timber.e(e, "Error getting welcome message")
         })
@@ -31,7 +31,7 @@ class ChatbotPresenter
 
     override fun sendMessage(message: String) {
         sendMessage.execute(onNext = {chatbotResponse ->
-            view?.showChatbotResponse(chatbotResponse)
+            view?.showChatbotMessage(chatbotResponse)
         }, onError = {e ->
             Timber.e(e, "Error sending message")
         }, requestValues = message)

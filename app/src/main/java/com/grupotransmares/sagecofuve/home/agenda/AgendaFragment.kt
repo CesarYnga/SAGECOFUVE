@@ -22,12 +22,12 @@ import kotlinx.android.synthetic.main.fragment_agenda.*
 import timber.log.Timber
 import javax.inject.Inject
 
-
 class AgendaFragment : BaseFragment(), AgendaContract.View {
 
-    private val adapter = AgendaAdapter()
+    @Inject
+    lateinit var presenter: AgendaPresenter
 
-    @Inject lateinit var presenter: AgendaPresenter
+    private val adapter = AgendaAdapter()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_agenda, container, false)

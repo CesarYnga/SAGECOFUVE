@@ -2,8 +2,8 @@ package com.grupotransmares.sagecofuve.data.repository.chatbot
 
 import android.content.Context
 import com.grupotransmares.sagecofuve.data.repository.chatbot.source.ChatbotDataSource
-import com.grupotransmares.sagecofuve.data.repository.chatbot.sourceif.ChatbotRemoteDataSource
-import com.grupotransmares.sagecofuve.home.chatbot.domain.model.ChatbotResponse
+import com.grupotransmares.sagecofuve.data.repository.chatbot.source.ChatbotRemoteDataSource
+import com.grupotransmares.sagecofuve.home.chatbot.domain.model.ChatbotMessage
 import io.reactivex.Single
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -18,11 +18,11 @@ class ChatbotRepository
         chatbotRemoteDataSource = ChatbotRemoteDataSource(context)
     }
 
-    override fun getWelcomeMessage(): Single<ChatbotResponse> {
+    override fun getWelcomeMessage(): Single<ChatbotMessage> {
         return chatbotRemoteDataSource.getWelcomeMessage()
     }
 
-    override fun sendMessage(message: String): Single<ChatbotResponse> {
+    override fun sendMessage(message: String): Single<ChatbotMessage> {
         return chatbotRemoteDataSource.sendMessage(message)
     }
 }

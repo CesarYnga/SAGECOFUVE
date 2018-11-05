@@ -1,3 +1,3 @@
 package com.grupotransmares.sagecofuve.home.chatbot.domain.model
 
-data class ChatbotResponse(val response: String)
+data class ChatbotMessage(val response: String)
